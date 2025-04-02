@@ -6,10 +6,10 @@
 #   relatedResources:
 #   - https://docs.example.com/policy/rule/E123
 #   tags:
-#   - iso27001
+#   - ISO 27001
 #   - A.5.32 Intellectual property rights
 #   complianceFrameworks:
-#   - iso27001
+#   - ISO 27001
 package compliance
 
 import rego.v1

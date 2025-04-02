@@ -2,14 +2,14 @@
 # title: Build from signed source
 # custom:
 #   description: This policy checks if the build was done from a signed commit.
-#   priority: 1
+#   priority: 0
 #   relatedResources:
 #   - https://docs.example.com/policy/rule/E123
 #   tags:
-#   - iso27001
+#   - ISO 27001
 #   - A.8 Access Control
 #   complianceFrameworks:
-#   - iso27001
+#   - ISO 27001
 package compliance
 
 import rego.v1
