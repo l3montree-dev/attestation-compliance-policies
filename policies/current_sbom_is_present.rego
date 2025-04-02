@@ -2,6 +2,7 @@
 # title: Current SBOM is present
 # custom:
 #   description: This policy checks if a current SBOM is present.
+#   priority: 1
 #   relatedResources:
 #   - https://docs.example.com/policy/rule/E123
 #   tags:
@@ -15,6 +16,6 @@ package compliance
 
 import rego.v1
 
-allow if {
-	# TODO
-}
+default allow := false
+
+# allow if {}

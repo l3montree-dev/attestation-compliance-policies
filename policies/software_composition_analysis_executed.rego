@@ -2,6 +2,7 @@
 # title: Software composition analysis executed
 # custom:
 #   description: This policy checks if software composition analysis was executed
+#   priority: 1
 #   relatedResources:
 #   - https://docs.example.com/policy/rule/E123
 #   tags:
@@ -13,6 +14,6 @@ package compliance
 
 import rego.v1
 
-allow if {
-	# TODO
-}
+default allow := false
+
+# allow if {}

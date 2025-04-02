@@ -2,6 +2,7 @@
 # title: Branch protection enabled
 # custom:
 #   description: This policy checks if branch protection is enabled for the default branch.
+#   priority: 1
 #   relatedResources:
 #   - https://docs.example.com/policy/rule/E123
 #   tags:
@@ -13,6 +14,6 @@ package compliance
 
 import rego.v1
 
-allow if {
-	# TODO
-}
+default allow := false
+
+# allow if {}
