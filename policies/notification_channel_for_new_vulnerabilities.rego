@@ -2,17 +2,18 @@
 # title: Notification channel for new vulnerabilities
 # custom:
 #   description: This policy checks if a notification channel is configured for new vulnerabilities.
+#   priority: 1
 #   relatedResources:
 #   - https://docs.example.com/policy/rule/E123
 #   tags:
-#   - iso27001
+#   - ISO 27001
 #   - A.8.8 Management of technical vulnerabilities
 #   complianceFrameworks:
-#   - iso27001
+#   - ISO 27001
 package compliance
 
 import rego.v1
 
-allow if {
-	# TODO
-}
+default allow := false
+
+# allow if {}
