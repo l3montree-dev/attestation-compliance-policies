@@ -14,6 +14,6 @@ package compliance
 
 import rego.v1
 
-default allow := false
+default compliant := false
 
-# allow if {}
+# compliant if {}
