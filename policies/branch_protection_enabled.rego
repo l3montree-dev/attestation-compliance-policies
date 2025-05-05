@@ -3,6 +3,7 @@
 # custom:
 #   description: This policy checks if branch protection is enabled for the default branch.
 #   priority: 1
+#   predicateType: https://in-toto.io/attestation/test-result/v0.1
 #   relatedResources:
 #   - https://docs.example.com/policy/rule/E123
 #   tags:

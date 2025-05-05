@@ -3,6 +3,7 @@
 # custom:
 #   description: This policy checks if the build was done from a signed commit.
 #   priority: 0
+#   predicateType: https://slsa.dev/provenance/v1
 #   relatedResources:
 #   - https://docs.example.com/policy/rule/E123
 #   tags:
