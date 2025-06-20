@@ -3,6 +3,7 @@
 # custom:
 #   description: This policy checks if a current SBOM is present.
 #   priority: 1
+#   predicateType: https://cyclonedx.org/bom
 #   relatedResources:
 #   - https://docs.example.com/policy/rule/E123
 #   tags:
