@@ -33,6 +33,6 @@ compliant if {
 
     committer_domain := split(committer_email, "@")[1]
     committer_domain == "l3montree.com"
-    
+
     author_domain == committer_domain
 }
