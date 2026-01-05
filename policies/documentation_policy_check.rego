@@ -19,6 +19,9 @@ documentationRepo := data.documentation_repo
 
 failure_msg := "input is empty" if {
   input == null}
+failure_msg := "no repositories match the documentation repository" if {
+  input != null
+  count([repo | input[i].repository == documentationRepo; repo := input[i].repository]) == 0}
 failure_msg := msg if {
   some i
   input[i].repository == documentationRepo
