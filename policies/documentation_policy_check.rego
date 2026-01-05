@@ -26,5 +26,5 @@ failure_msg := msg if {
   msg := sprintf("PR %v in %v is not closed yet!", [
     input[i].pull_request.number,
     input[i].repository,
-  ])
+  ])}
 
