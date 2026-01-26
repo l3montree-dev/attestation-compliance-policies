@@ -73,13 +73,12 @@ has_merged_docs_pr_with_title(title) if {
 
 
 current_production_pr_merged if {
-  some pr := input[_]
+  some pr in input
   pr.repository == productionRepo
   is_pr(pr)
   pr.title == pullRequestTitle
   is_merged_pr(pr)
 }
-
 
 
 failure_msg contains "input is empty" if {
