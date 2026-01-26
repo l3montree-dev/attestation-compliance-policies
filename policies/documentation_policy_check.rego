@@ -1,5 +1,5 @@
 # METADATA
-# title: Documentation merged gate (PR-title scoped, skip if prod PR already merged)
+# title: Documentation merged gate
 # custom:
 #   description: If there is an open production issue matching the current PR title and labeled DOCUMENTATION-REQUIRED, require a merged PR in the documentation repo with the same title. Skip enforcement if the production PR with this title is already merged.
 #   priority: 1
@@ -80,7 +80,6 @@ current_production_pr_merged if {
   is_merged_pr(prod_pr)
 }
 
-# ---- output ----
 
 failure_msg contains "input is empty" if {
   input == null
