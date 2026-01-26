@@ -92,10 +92,12 @@ failure_msg contains "input is empty" if {
 
 failure_msg contains msg if {
   msg := input
-  msg == "Failed to fetch issues from repository" ||
-  msg == "Rate Limit or Wrong Repository" ||
-  msg == "Failed to read response body" ||
-  msg == "Failed to unmarshal issues"
+  msg in {
+    "Failed to fetch issues from repository",
+    "Rate Limit or Wrong Repository",
+    "Failed to read response body",
+    "Failed to unmarshal issues",
+  }
 }
 
 failure_msg contains msg if {
