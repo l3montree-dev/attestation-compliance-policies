@@ -21,6 +21,7 @@ documentationRepo := data.documentation_repo
 pullRequestTitle := data.pull_request_title
 
 requiredLabel := "DOCUMENTATION-REQUIRED"
+normalize_title(s) := lower(trim(s))
 
 has_label(obj, name) if {
   some i
@@ -40,6 +41,7 @@ is_pr(obj) if {
   object.get(obj, "pull_request", null) != null
 }
 
+
 is_merged_pr(obj) if {
   is_pr(obj)
   object.get(obj.pull_request, "merged_at", null) != null
@@ -49,46 +51,58 @@ documentation_required(obj) if { has_label(obj, requiredLabel) }
 documentation_required(obj) if { has_tag(obj, requiredLabel) }
 
 
-
-
-matching_issue contains iss if {
+matching_issues contains iss if {
   iss := input[_]
   iss.repository == productionRepo
   is_issue(iss)
   iss.state == "open"
-  iss.title == pullRequestTitle
+  normalize_title(iss.title) == normalize_title(pullRequestTitle)
 }
 
 
-merged_doc_prs contains pr if {
-  pr := input[_]
-  pr.repository == documentationRepo
-  is_merged_pr(pr)
+merged_doc_prs contains doc_pr if {
+  doc_pr := input[_]
+  doc_pr.repository == documentationRepo
+  is_merged_pr(doc_pr)
 }
 
 has_merged_docs_pr_with_title(title) if {
-  some pr in merged_doc_prs
-  pr.title == title
+  some doc_pr in merged_doc_prs
+  normalize_title(doc_pr.title) == normalize_title(title)
 }
 
 
 current_production_pr_merged if {
-  some pr in input
-  pr.repository == productionRepo
-  is_pr(pr)
-  pr.title == pullRequestTitle
-  is_merged_pr(pr)
+  some prod_pr in input
+  prod_pr.repository == productionRepo
+  is_pr(prod_pr)
+  normalize_title(prod_pr.title) == normalize_title(pullRequestTitle)
+  is_merged_pr(prod_pr)
 }
 
+# ---- output ----
 
 failure_msg contains "input is empty" if {
   input == null
 }
 
+failure_msg contains "input is empty" if {
+  input != null
+  count(input) == 0
+}
+
+failure_msg contains msg if {
+  msg := input
+  msg == "Failed to fetch issues from repository" ||
+  msg == "Rate Limit or Wrong Repository" ||
+  msg == "Failed to read response body" ||
+  msg == "Failed to unmarshal issues"
+}
+
 failure_msg contains msg if {
   not current_production_pr_merged
 
-  some iss in matching_issue
+  some iss in matching_issues
   documentation_required(iss)
   not has_merged_docs_pr_with_title(pullRequestTitle)
 
