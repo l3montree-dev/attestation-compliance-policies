@@ -15,19 +15,41 @@
 
 package documentationMerged
 
-documentationRepo := data.documentation_repo 
+documentationRepo := data.documentation_repo
+
+# Helper: true, wenn das Item RELEASE_BLOCKING markiert ist
+release_blocking(i) {
+  some j
+  input[i].labels[j].name == "DOCUMENTATION-REQUIRED"
+}
+
+# Alternative Input-Form: tags als String-Array 
+release_blocking(i) {
+  some j
+  input[i].tags[j] == "DOCUMENTATION-REQUIRED"
+}
 
 failure_msg := "input is empty" if {
-  input == null}
+  input == null
+}
+
 failure_msg := "no repositories match the documentation repository" if {
   input != null
-  count([repo | input[i].repository == documentationRepo; repo := input[i].repository]) == 0}
+  count([repo | input[i].repository == documentationRepo; repo := input[i].repository]) == 0
+}
+
+# FAIL NUR, wenn:
+# - repository == documentationRepo
+# - PR nicht closed
+# - UND release_blocking(i) == true
 failure_msg := msg if {
   some i
   input[i].repository == documentationRepo
   input[i].pull_request.state != "closed"
+  release_blocking(i)
+
   msg := sprintf("PR %v in %v is not closed yet!", [
     input[i].pull_request.number,
     input[i].repository,
-  ])}
-
+  ])
+}
