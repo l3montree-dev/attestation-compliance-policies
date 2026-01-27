@@ -25,6 +25,14 @@ production_pr_exists if {
 }
 
 
+docs_pr_exists_with_title if {
+  some obj in input
+  obj.repository == documentationRepo
+  is_pr(obj)
+  obj.title == pullRequestTitle
+}
+
+
 docs_merged_pr_exists_with_title if {
   some obj in input
   obj.repository == documentationRepo
@@ -36,9 +44,16 @@ failure_msg contains msg if {
   production_pr_exists
   not docs_merged_pr_exists_with_title
 
-msg := sprintf(
-  "Documentation required for PR '%v': matching issue #%v in %v is labeled %v, but no merged documentation PR with the same title exists in %v.",
-  [pullRequestTitle, iss.number, iss.repository, requiredLabel, documentationRepo]
-)
-  
+  msg := sprintf(
+    "Documentation PR missing: For the Production PR title '%v' (%v), there is no MERGED PR with the same title in the docs repo %v.",
+    [pullRequestTitle, productionRepo, documentationRepo]
+  )
+}
+
+failure_msg contains msg if {
+  not production_pr_exists
+  msg := sprintf(
+    "Production PR '%v' was not found in repo '%v' in the input (may indicate the wrong repo/fetch/attestation).",
+    [pullRequestTitle, productionRepo]
+  )
 }
