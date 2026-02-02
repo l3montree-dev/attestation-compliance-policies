@@ -19,6 +19,10 @@ title_for_node_id(node_id) := title if {
   obj.node_id == node_id
   title := obj.title
 }
+sprintf(
+    "ERROR: Docs required but missing merged docs PR for title '%v' (prod: '%v', docs: '%v').",
+    [pullRequestTitle, productionRepo, documentationRepo])
+
 
 requiredLabel := "DOCUMENTATION-REQUIRED"
 is_issue(obj) if { object.get(obj, "pull_request", null) == null }
