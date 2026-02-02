@@ -1,6 +1,3 @@
-
-
-
 package documentationMerged
 
 import future.keywords.contains
@@ -9,20 +6,7 @@ import future.keywords.in
 
 productionRepo := data.production_repo
 documentationRepo := data.documentation_repo
-nodeID := data.node_id
-pullRequestTitle := title_for_node_id(nodeID)
-
-title_for_node_id(node_id) := title if {
-  some path, obj
-  walk(input, [path, obj])
-  is_object(obj)
-  obj.node_id == node_id
-  title := obj.title
-}
-sprintf(
-    "ERROR: Docs required but missing merged docs PR for title '%v' (prod: '%v', docs: '%v').",
-    [pullRequestTitle, productionRepo, documentationRepo])
-
+pullRequestTitle := data.pull_request_title
 
 requiredLabel := "DOCUMENTATION-REQUIRED"
 is_issue(obj) if { object.get(obj, "pull_request", null) == null }
